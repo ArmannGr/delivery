@@ -12,6 +12,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-select2-wrapper/css/select2.css';
 import './App.css';
 import 'font-awesome/css/font-awesome.min.css';
+import Login from './Pages/Login/Login'
+import Register from "./Pages/Register/Register";
 
 function App() {
     return (
@@ -26,6 +28,14 @@ function App() {
 
                     <Route path="/" exact={true}>
                         <Main/>
+                    </Route>
+
+                    <Route path="/login" exact={true}>
+                        <Login/>
+                    </Route>
+
+                    <Route path="/register" exact={true}>
+                        <Register/>
                     </Route>
                 </Switch>
 

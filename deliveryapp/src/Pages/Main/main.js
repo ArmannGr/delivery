@@ -6,6 +6,7 @@ import ProductBox from './Components/ProductBox';
 import CardItem from '../../common/CardItem';
 import SectionHeading from '../../common/SectionHeading';
 import FontAwesome from '../../common/FontAwesome';
+import {Link} from "react-router-dom";
 
 
 class Main extends Component {
@@ -143,7 +144,7 @@ class Main extends Component {
                         />
                         <Row>
                             <Col sm={12} className="text-center">
-                                Create an Account <FontAwesome icon='chevron-circle-right' />
+                                <Link to="/register">Create an Account <FontAwesome icon='chevron-circle-right' /> </Link>
                             </Col>
                         </Row>
                     </Container>
