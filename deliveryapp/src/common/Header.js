@@ -1,10 +1,9 @@
 import React from 'react';
 import {NavLink,Link} from 'react-router-dom';
 import {Navbar,Nav,Container,NavDropdown,Image,Badge} from 'react-bootstrap';
-import DropDownTitle from './DropDownTitle';
-import CartDropdownHeader from './CartDropdownHeader';
-import CartDropdownItem from './CartDropdownItem';
-
+import DropDownTitle from '../common/DropDownTitle';
+import CartDropdownHeader from '../common/CartDropdownHeader';
+import CartDropdownItem from '../common/CartDropdownItem';
 import Icofont from 'react-icofont';
 
 class Header extends React.Component {
@@ -65,8 +64,8 @@ class Header extends React.Component {
 			            	<NavDropdown.Item eventKey={3.4} as={NavLink} activeclassname="active" to="/register">Register</NavDropdown.Item>
 			            	<NavDropdown.Item eventKey={3.5} as={NavLink} activeclassname="active" to="/404">404</NavDropdown.Item>
 			            	<NavDropdown.Item eventKey={3.6} as={NavLink} activeclassname="active" to="/extra">Extra</NavDropdown.Item>
-			            </NavDropdown>
 
+			            </NavDropdown>
 			            <NavDropdown alignRight
 			            	title={
 			            		<DropDownTitle 
@@ -97,6 +96,7 @@ class Header extends React.Component {
 			            		/>
 			            	}
 			            >
+
 			                <div className="dropdown-cart-top shadow-sm">
 			               	  {
 			               	  	<CartDropdownHeader 

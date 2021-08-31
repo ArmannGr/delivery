@@ -14,6 +14,7 @@ import './App.css';
 import 'font-awesome/css/font-awesome.min.css';
 import Login from './Pages/Login/Login'
 import Register from "./Pages/Register/Register";
+import Detail from "./Pages/Detail/detail";
 
 function App() {
     return (
@@ -37,6 +38,11 @@ function App() {
                     <Route path="/register" exact={true}>
                         <Register/>
                     </Route>
+
+                    <Route path="/detail" exact={true}>
+                        <Detail/>
+                    </Route>
+
                 </Switch>
 
                 <Route render={probs =>(
