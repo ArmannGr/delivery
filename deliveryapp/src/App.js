@@ -14,11 +14,11 @@ import './App.css';
 import 'font-awesome/css/font-awesome.min.css';
 import Login from './Pages/Login/Login'
 import Register from "./Pages/Register/Register";
-import Detail from "./Pages/Detail/detail";
+import { AuthProvider} from "./contexts/AuthContext";
 
 function App() {
     return (
-        <>
+        <AuthProvider>
             <Router>
 
                 <Route render={probs =>(
@@ -50,7 +50,7 @@ function App() {
                 )}/>
 
             </Router>
-        </>
+        </AuthProvider>
     );
 }
 
