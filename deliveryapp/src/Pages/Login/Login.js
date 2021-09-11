@@ -1,10 +1,32 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import {Row,Col,Container,Form,Button} from 'react-bootstrap';
+import React, {useRef, useState} from 'react';
+import {Link, useHistory} from 'react-router-dom';
+import {Row, Col, Container, Form, Button, Alert} from 'react-bootstrap';
 import FontAwesome from '../../common/FontAwesome';
+import {useAuth} from "../../contexts/AuthContext";
 
-class Login extends React.Component{
-    render(){
+function Login (){
+
+    const emailRef = useRef()
+    const passwordRef = useRef()
+    const {login} = useAuth()
+    const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
+    const history = useHistory();
+
+    async function handleSubmit(e){
+        e.preventDefault();
+        console.log("Working");
+        try {
+            setLoading(true);
+            await login(emailRef.current.value, passwordRef.current.value);
+            history.push('/');
+        }catch(e) {
+            console.log(e.toString());
+            setError('Failed to create an account!');
+        }
+        setLoading(false);
+    }
+
     return(
         <Container fluid className='bg-white'>
             <Row>
@@ -15,13 +37,14 @@ class Login extends React.Component{
                             <Row>
                                 <Col md={9} lg={8} className="mx-auto pl-5 pr-5">
                                     <h3 className="login-heading mb-4">Welcome back!</h3>
-                                    <Form>
+                                    {error && <Alert variant="danger">{error}</Alert>}
+                                    <Form onSubmit={handleSubmit}>
                                         <div className="form-label-group">
-                                            <Form.Control type="email" id="inputEmail" placeholder="Email address" />
+                                            <Form.Control type="email" id="inputEmail" placeholder="Email address" ref={emailRef} required/>
                                             <Form.Label htmlFor="inputEmail">Email address / Mobile</Form.Label>
                                         </div>
                                         <div className="form-label-group">
-                                            <Form.Control type="password" id="inputPassword" placeholder="Password" />
+                                            <Form.Control type="password" id="inputPassword" placeholder="Password" ref={passwordRef} required/>
                                             <Form.Label htmlFor="inputPassword">Password</Form.Label>
                                         </div>
                                         <Form.Check
@@ -31,7 +54,7 @@ class Login extends React.Component{
                                             id="custom-checkbox"
                                             label="Remember password"
                                         />
-                                        <Link to="/" className="btn btn-lg btn-outline-primary btn-block btn-login text-uppercase font-weight-bold mb-2">Sign in</Link>
+                                        <Button disabled={loading} type="submit" className="btn btn-lg btn-outline-primary btn-block btn-login text-uppercase font-weight-bold mb-2">Sign in</Button>
                                         <div className="text-center pt-3">
                                             Don’t have an account? <Link className="font-weight-bold" to="/register">Sign Up</Link>
                                         </div>
@@ -54,7 +77,6 @@ class Login extends React.Component{
             </Row>
         </Container>
     );
-    }
 }
 
 export default Login;
