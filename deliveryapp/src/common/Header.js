@@ -93,6 +93,7 @@ class Header extends React.Component {
 			            			badgeClass='ml-1'
 			            			badgeVariant='success'
 			            			badgeValue={5}
+									linkUrl='/checkout'
 			            		/>
 			            	}
 			            >

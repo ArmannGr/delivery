@@ -15,6 +15,11 @@ import 'font-awesome/css/font-awesome.min.css';
 import Login from './Pages/Login/Login'
 import Register from "./Pages/Register/Register";
 import Detail from "./Pages/Detail/detail";
+import TrackOrder from "./Pages/TrackOrder/TrackOrder";
+import Orders from "./Pages/orders/Orders";
+import Checkout from "./Pages/checkout/Checkout";
+
+
 
 function App() {
     return (
@@ -33,6 +38,16 @@ function App() {
 
                     <Route path="/login" exact={true}>
                         <Login/>
+                    </Route>
+                    <Route path="/checkout" exact={true}>
+                        <Checkout/>
+                    </Route>
+
+                    <Route path="/track-order" exact={true}>
+                        <TrackOrder/>
+                    </Route>
+                    <Route path="/orders" exact={true}>
+                        <Orders/>
                     </Route>
 
                     <Route path="/register" exact={true}>
