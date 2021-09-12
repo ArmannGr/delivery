@@ -19,7 +19,7 @@ class CardItem extends React.Component {
 	              	  :""
 	              }
                   <div className={`favourite-heart position-absolute ${this.props.favIcoIconColor}`}>
-                  	<Link to={this.props.linkUrl}>
+                  	<Link to={this.props.linkUrl} >
                   		<Icofont icon='heart'/>
                   	</Link>
                   </div>

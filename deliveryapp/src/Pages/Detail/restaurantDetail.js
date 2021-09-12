@@ -11,7 +11,7 @@ import RatingBar from '../../common/RatingBar';
 import Review from '../../common/Review';
 import Icofont from 'react-icofont';
 
-class Detail extends React.Component {
+class RestaurantDetail extends React.Component {
     constructor(props, context) {
         super(props, context);
 
@@ -51,7 +51,6 @@ class Detail extends React.Component {
         console.log(value);
         //console.log(quantity);
     }
-
 
 
     render() {
@@ -598,4 +597,4 @@ class Detail extends React.Component {
 }
 
 
-export default Detail;
+export default RestaurantDetail;

@@ -15,8 +15,9 @@ import 'font-awesome/css/font-awesome.min.css';
 import Login from './Pages/Login/Login'
 import Register from "./Pages/Register/Register";
 import { AuthProvider} from "./contexts/AuthContext";
-import Detail from "./Pages/Detail/detail";
+import RestaurantDetail from "./Pages/Detail/restaurantDetail";
 import RestaurantListing from "./Pages/RestaurantListing/RestaurantListing";
+import TestPage from "./testing/test";
 
 function App() {
     return (
@@ -45,8 +46,12 @@ function App() {
                         <Register/>
                     </Route>
 
-                    <Route path="/detail" exact={true}>
-                        <Detail/>
+                    <Route path="/detail/:restaurantId" exact={true}>
+                        <RestaurantDetail/>
+                    </Route>
+
+                    <Route path='/test' exact={true}>
+                        <TestPage/>
                     </Route>
 
                 </Switch>
