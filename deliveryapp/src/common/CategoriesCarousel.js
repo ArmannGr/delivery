@@ -10,9 +10,9 @@ class CategoriesCarousel extends React.Component {
 	         <div className="item">
 	         	<ProductBox 
 	         		boxClass='osahan-category-item'
-	         		title='American'
+	         		title='Baguette'
 	         		counting='156'
-			   		image='img/list/1.png'
+			   		image='../../public/img/cake-1850011_640.jpg'
 			   		imageClass='img-fluid'
 			   		imageAlt='carousel'
 			   		linkUrl='#'
@@ -32,7 +32,7 @@ class CategoriesCarousel extends React.Component {
 	         <div className="item">
 	         	<ProductBox 
 	         		boxClass='osahan-category-item'
-	         		title='Healthy'
+	         		title='Wraps'
 	         		counting='130'
 			   		image='img/list/3.png'
 			   		imageClass='img-fluid'
@@ -54,17 +54,6 @@ class CategoriesCarousel extends React.Component {
 	         <div className="item">
 	         	<ProductBox 
 	         		boxClass='osahan-category-item'
-	         		title='Chinese'
-	         		counting='111'
-			   		image='img/list/5.png'
-			   		imageClass='img-fluid'
-			   		imageAlt='carousel'
-			   		linkUrl='#'
-			   	/>
-	         </div>
-	         <div className="item">
-	         	<ProductBox 
-	         		boxClass='osahan-category-item'
 	         		title='Hamburgers'
 	         		counting='958'
 			   		image='img/list/6.png'
@@ -78,7 +67,7 @@ class CategoriesCarousel extends React.Component {
 	         		boxClass='osahan-category-item'
 	         		title='Dessert'
 	         		counting='56'
-			   		image='img/list/7.png'
+			   		image='https://firebasestorage.googleapis.com/v0/b/delivery-c718a.appspot.com/o/categoryImg%2Fcake-1850011_640.jpg?alt=media&token=6fb991b9-42bb-435d-b4c2-9beef3e9d9df'
 			   		imageClass='img-fluid'
 			   		imageAlt='carousel'
 			   		linkUrl='#'
@@ -89,7 +78,7 @@ class CategoriesCarousel extends React.Component {
 	         		boxClass='osahan-category-item'
 	         		title='Chicken'
 	         		counting='40'
-			   		image='img/list/8.png'
+			   		image='deliveryapp/public/bilder/fried-chicken-4977369_640.jpg'
 			   		imageClass='img-fluid'
 			   		imageAlt='carousel'
 			   		linkUrl='#'
@@ -106,6 +95,50 @@ class CategoriesCarousel extends React.Component {
 			   		linkUrl='#'
 			   	/>
 	         </div>
+			  <div className="item">
+				  <ProductBox
+					  boxClass='osahan-category-item'
+					  title='Fingerfood'
+					  counting='156'
+					  image='img/list/9.png'
+					  imageClass='img-fluid'
+					  imageAlt='carousel'
+					  linkUrl='#'
+				  />
+			  </div>
+			  <div className="item">
+				  <ProductBox
+					  boxClass='osahan-category-item'
+					  title='Noodels'
+					  counting='156'
+					  image='img/list/9.png'
+					  imageClass='img-fluid'
+					  imageAlt='carousel'
+					  linkUrl='#'
+				  />
+			  </div>
+			  <div className="item">
+				  <ProductBox
+					  boxClass='osahan-category-item'
+					  title='Salad'
+					  counting='156'
+					  image='img/list/9.png'
+					  imageClass='img-fluid'
+					  imageAlt='carousel'
+					  linkUrl='#'
+				  />
+			  </div>
+			  <div className="item">
+				  <ProductBox
+					  boxClass='osahan-category-item'
+					  title='Meat'
+					  counting='156'
+					  image='img/list/9.png'
+					  imageClass='img-fluid'
+					  imageAlt='carousel'
+					  linkUrl='#'
+				  />
+			  </div>
 	      </OwlCarousel>
 	    );
 	}
