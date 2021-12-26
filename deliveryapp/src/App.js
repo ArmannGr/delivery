@@ -15,16 +15,18 @@ import './App.css';
 import 'font-awesome/css/font-awesome.min.css';
 import Login from './Pages/Login/Login'
 import Register from "./Pages/Register/Register";
-import Detail from "./Pages/Detail/detail";
 import Checkout from "./Pages/checkout/Checkout";
+import RestaurantDetail from "./Pages/Detail/restaurantDetail";
+import TestPage from "./testing/test";
+import RestaurantListing from "./Pages/RestaurantListing/RestaurantListing";
 
 function App() {
     return (
         <>
             <Router>
 
-                <Route render={probs =>(
-                    (probs.location.pathname!=='/login' && probs.location.pathname!=='/register') ? <Header/>:''
+                <Route render={probs => (
+                    (probs.location.pathname !== '/login' && probs.location.pathname !== '/register') ? <Header/> : ''
                 )}/>
 
                 <Switch>
@@ -49,14 +51,19 @@ function App() {
                         <RestaurantDetail/>
                     </Route>
 
+                    <Route path="/listing" exact={true}>
+                        <RestaurantListing/>
+                    </Route>
+
+
                     <Route path='/test' exact={true}>
                         <TestPage/>
                     </Route>
 
                 </Switch>
 
-                <Route render={probs =>(
-                    (probs.location.pathname!=='/login' && probs.location.pathname!=='/register') ? <Footer/>:''
+                <Route render={probs => (
+                    (probs.location.pathname !== '/login' && probs.location.pathname !== '/register') ? <Footer/> : ''
                 )}/>
 
             </Router>
