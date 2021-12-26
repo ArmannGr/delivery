@@ -4,11 +4,10 @@ import CardItem from "../../common/CardItem";
 import {getStorage} from "../../firebase";
 import {getDownloadURL, ref} from "firebase/storage";
 
-export function RestaurantListingItem(probs) {
+export function RestaurantListingItem(props) {
 
     function GetDownloadURLForProfileImage(){
-        getDownloadURL(ref(getStorage,probs.profileImage)).then((url)=>{
-            console.log(url);
+        getDownloadURL(ref(getStorage,props.restaurantData.profileImage)).then((url)=>{
             setProfileImage(url);
         });
 
@@ -21,19 +20,20 @@ export function RestaurantListingItem(probs) {
 
     return <Col md={4} sm={6} className="mb-4 pb-2">
         <CardItem
-            title={probs.title}
-            subTitle={ probs.tags.map(tag => "#"+tag+" ")}
+            title={props.restaurantData.title}
+            subTitle={ props.restaurantData.tags.map(tag => "#"+tag+" ")}
             imageAlt='Product'
             image={profileImage}
             imageClass='img-fluid item-img'
-            linkUrl='/detail/:125'
+            linkUrl='/detail'
+            restaurantData={props.restaurantData}
             //offerText='65% off | Use Coupon OSAHAN50'
             //time='15–25 min'
             //price='$100 FOR TWO'
             showPromoted={false}
             promotedVariant='dark'
             favIcoIconColor='text-danger'
-            rating={probs.rating}
+            rating={props.restaurantData.rating}
         />
     </Col>;
 }

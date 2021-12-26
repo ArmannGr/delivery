@@ -3,8 +3,9 @@ import Header from './common/Header'
 import Footer from './common/Footer';
 import {
     BrowserRouter as Router,
-    Switch,
     Route,
+    Switch
+
 } from "react-router-dom";
 import React from 'react';
 
@@ -46,7 +47,7 @@ function App() {
                         <Register/>
                     </Route>
 
-                    <Route path="/detail/:restaurantId" exact={true}>
+                    <Route path="/detail" exact={true}>
                         <RestaurantDetail/>
                     </Route>
 

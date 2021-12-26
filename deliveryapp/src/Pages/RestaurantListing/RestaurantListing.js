@@ -41,12 +41,7 @@ export default function RestaurantListing(){
 
                                 {
                                     restaurants && restaurants.map(restaurant => {
-                                            console.log(restaurants.length);
-                                            return <RestaurantListingItem
-                                                title={restaurant.name}
-                                                rating={restaurant.stars}
-                                                tags={restaurant.tags}
-                                                profileImage={restaurant.profileImage}/>;
+                                            return <RestaurantListingItem restaurantData={restaurant}/>;
                                         }
                                     )
                                 }
