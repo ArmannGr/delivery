@@ -46,7 +46,7 @@ class TopSearch extends React.Component {
                                             <Link className="locate-me" to="#"><Icofont icon='ui-pointer'/> Locate Me</Link>
                                         </Form.Group>
                                         <Form.Group className='col-lg-2 col-md-2 col-sm-12'>
-                                            <Link to="listing" className="btn btn-primary btn-block btn-lg btn-gradient">Search</Link>
+                                            <Link to="/listing" className="btn btn-primary btn-block btn-lg btn-gradient">Search</Link>
                                         </Form.Group>
                                     </div>
                                 </Form>

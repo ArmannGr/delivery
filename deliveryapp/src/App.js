@@ -3,8 +3,9 @@ import Header from './common/Header'
 import Footer from './common/Footer';
 import {
     BrowserRouter as Router,
-    Switch,
     Route,
+    Switch
+
 } from "react-router-dom";
 import React from 'react';
 
@@ -45,7 +46,11 @@ function App() {
                     </Route>
 
                     <Route path="/detail" exact={true}>
-                        <Detail/>
+                        <RestaurantDetail/>
+                    </Route>
+
+                    <Route path='/test' exact={true}>
+                        <TestPage/>
                     </Route>
 
                 </Switch>
