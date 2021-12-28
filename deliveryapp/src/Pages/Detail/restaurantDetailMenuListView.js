@@ -1,37 +1,34 @@
 import {Col, Row} from "react-bootstrap";
 import QuickBite from "../../common/QuickBite";
-import React, {useEffect, useState} from "react";
-import {collection, db, getDocs} from "../../firebase";
-import {menuConverter} from "./menuModel";
+import React from "react";
+import {DecreaseItem,IncrementItem} from "./cartService";
 
 export default function RestaurantDetailMenuListView(props) {
 
-    useEffect(()=> getMenuItems(),[]);
-    const [menuItems, setMenuItems] = useState([]);
-
-    async function getMenuItems(){
-        console.log('Getting menu items for restaurant with following ID '+props.restaurantID);
-        const querySnapshot = await getDocs(collection(db,`restaurants/${props.restaurantID}/menu`).withConverter(menuConverter));
-        setMenuItems(querySnapshot.docs.map(doc => doc.data()));
-    }
-
     return <Row>
-        <h5 className="mb-4 mt-3 col-md-12">Menu <small className="h6 text-black-50">{menuItems && menuItems.length}</small></h5>
+
+        <h5 className="mb-4 mt-3 col-md-12">Menu <small className="h6 text-black-50">{props.menuItems && props.menuItems.length}</small></h5>
         <Col md={12}>
             <div className="bg-white rounded border shadow-sm">
 
-                {menuItems && menuItems.map(item =>
-                    <QuickBite
-                        id={item.name}
-                        title={item.name}
-                        price={item.price}
-                        priceUnit='€'
-                        getValue={props.value}
-                        // image={item.image}
-                    />
+                {props.menuItems && props.menuItems.map(item => {
+                    // whether in the current cart user has this item if yes update the quantity
+                    const cartItem =  props.cart.find(cartItem => cartItem.name === item.name);
+                    const quantity = cartItem === undefined ? 0 : cartItem.quantity;
+
+                        return <QuickBite
+                            id={item.id}
+                            title={item.name}
+                            price={item.price}
+                            priceUnit='€'
+                            restaurantID={props.restaurantID}
+                            decrease={(itemName)=>DecreaseItem(itemName,props.setLoading,props.restaurantID,props.uid,props.setCart)}
+                            increase={(itemData)=>IncrementItem(itemData,props.setLoading,props.restaurantID,props.uid,props.setCart)}
+                            quantity={quantity}
+                        />;
+                    }
                 )
                 }
-
 
             </div>
         </Col>
