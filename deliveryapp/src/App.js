@@ -19,14 +19,20 @@ import Checkout from "./Pages/checkout/Checkout";
 import RestaurantDetail from "./Pages/Detail/restaurantDetail";
 import TestPage from "./testing/test";
 import RestaurantListing from "./Pages/RestaurantListing/RestaurantListing";
+import {AuthProvider} from "./contexts/AuthContext";
+import LoadingOverlay from "react-loading-overlay";
+import ClockLoader from "react-spinners/BeatLoader"
+import {Row} from "react-bootstrap";
 
 function App() {
     return (
-        <>
+
+        <AuthProvider>
+
             <Router>
 
-                <Route render={probs => (
-                    (probs.location.pathname !== '/login' && probs.location.pathname !== '/register') ? <Header/> : ''
+                <Route render={probs =>(
+                    (probs.location.pathname!=='/login' && probs.location.pathname!=='/register') ? <Header/>:''
                 )}/>
 
                 <Switch>
@@ -62,12 +68,12 @@ function App() {
 
                 </Switch>
 
-                <Route render={probs => (
-                    (probs.location.pathname !== '/login' && probs.location.pathname !== '/register') ? <Footer/> : ''
+                <Route render={probs =>(
+                    (probs.location.pathname!=='/login' && probs.location.pathname!=='/register') ? <Footer/>:''
                 )}/>
 
             </Router>
-        </>
+        </AuthProvider>
     );
 }
 

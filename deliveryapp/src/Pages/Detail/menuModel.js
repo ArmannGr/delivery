@@ -1,17 +1,19 @@
 class MenuModel{
-    constructor(image,name,price) {
+    constructor(image,name,price,id) {
         this.image = image;
         this.name =name ;
         this.price = price;
+        this.id = id;
     }
 }
 
 export const menuConverter = {
-    toFirestore: function (review){
+    toFirestore: function (menuItem){
         return {
-            image:review.image,
-            name:review.name,
-            price:review.price,
+            image:menuItem.image,
+            name:menuItem.name,
+            price:menuItem.price,
+            id:menuItem.id,
         }
     },
     fromFirestore(snapshot, options) {
@@ -20,6 +22,7 @@ export const menuConverter = {
             data.image,
             data.name,
             data.price,
+            snapshot.id,
         )
     }
 }
