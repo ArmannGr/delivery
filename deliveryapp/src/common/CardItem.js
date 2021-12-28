@@ -19,7 +19,7 @@ class CardItem extends React.Component {
 	              	  :""
 	              }
                   <div className={`favourite-heart position-absolute ${this.props.favIcoIconColor}`}>
-                  	<Link to={this.props.linkUrl}>
+                  	<Link to={this.props.linkUrl} >
                   		<Icofont icon='heart'/>
                   	</Link>
                   </div>
@@ -30,7 +30,10 @@ class CardItem extends React.Component {
 	                  )
                   	  :""
                   }
-                  <Link to={this.props.linkUrl}>
+                  <Link to={{
+                      pathname:this.props.linkUrl,
+                      state:this.props.restaurantData
+                  }}>
                   	<Image src={this.props.image} className={this.props.imageClass} alt={this.props.imageAlt} />
                   </Link>
                </div>

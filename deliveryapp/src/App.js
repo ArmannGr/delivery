@@ -3,8 +3,9 @@ import Header from './common/Header'
 import Footer from './common/Footer';
 import {
     BrowserRouter as Router,
-    Switch,
     Route,
+    Switch
+
 } from "react-router-dom";
 import React from 'react';
 
@@ -14,12 +15,20 @@ import './App.css';
 import 'font-awesome/css/font-awesome.min.css';
 import Login from './Pages/Login/Login'
 import Register from "./Pages/Register/Register";
-import Detail from "./Pages/Detail/detail";
 import Checkout from "./Pages/checkout/Checkout";
+import RestaurantDetail from "./Pages/Detail/restaurantDetail";
+import TestPage from "./testing/test";
+import RestaurantListing from "./Pages/RestaurantListing/RestaurantListing";
+import {AuthProvider} from "./contexts/AuthContext";
+import LoadingOverlay from "react-loading-overlay";
+import ClockLoader from "react-spinners/BeatLoader"
+import {Row} from "react-bootstrap";
 
 function App() {
     return (
-        <>
+
+        <AuthProvider>
+
             <Router>
 
                 <Route render={probs =>(
@@ -45,7 +54,16 @@ function App() {
                     </Route>
 
                     <Route path="/detail" exact={true}>
-                        <Detail/>
+                        <RestaurantDetail/>
+                    </Route>
+
+                    <Route path="/listing" exact={true}>
+                        <RestaurantListing/>
+                    </Route>
+
+
+                    <Route path='/test' exact={true}>
+                        <TestPage/>
                     </Route>
 
                 </Switch>
@@ -55,7 +73,7 @@ function App() {
                 )}/>
 
             </Router>
-        </>
+        </AuthProvider>
     );
 }
 

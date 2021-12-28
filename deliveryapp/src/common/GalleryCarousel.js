@@ -17,19 +17,10 @@ class GalleryCarousel extends React.Component {
 	      <>
 		      <OwlCarousel ref={this.Carousel}  nav loop {...options} className="owl-theme homepage-ad">
 		         <div className="item">
-		         	<Image fluid src="/img/gallery/1.png" />
+		         	<Image fluid src={this.props.restaurant.profileImage} />
 		         </div>
 		         <div className="item">
-		         	<Image fluid src="/img/gallery/2.png" />
-		         </div>
-		         <div className="item">
-		         	<Image fluid src="/img/gallery/3.png" />
-		         </div>
-		         <div className="item">
-		         	<Image fluid src="/img/gallery/1.png" />
-		         </div>
-		         <div className="item">
-		         	<Image fluid src="/img/gallery/2.png" />
+		         	<Image fluid src={this.props.restaurant.backgroundImage} />
 		         </div>
 		         <div className="item">
 		         	<Image fluid src="/img/gallery/3.png" />
