@@ -1,4 +1,4 @@
-import {collection, db, doc, getDoc, getDocs, setDoc} from "../../firebase";
+import {collection, db, doc, getDoc, getDocs, setDoc, where} from "../../firebase";
 
 
 export async function getUserCart(restaurantID,uid,setCart){
@@ -16,6 +16,7 @@ export async function getUserCart(restaurantID,uid,setCart){
 export async function IncrementItem (itemName,setLoading,restaurantID,uid,setCart)  {
     setLoading(true);
     console.log(uid);
+    console.log(restaurantID);
     //Add or Increase item
     const orderPath =`orders/${uid}${restaurantID}/`;
     let orderDoc = await getDoc(doc(db,orderPath));
@@ -23,7 +24,7 @@ export async function IncrementItem (itemName,setLoading,restaurantID,uid,setCar
     const menuItem = menu.docs.find(doc => doc.data()["name"] === itemName);
     if(menuItem === undefined) {
         setLoading(false);
-        return
+        return;
     }
     console.log(menu);
     const price = menuItem.data()["price"];
@@ -58,6 +59,7 @@ export async function IncrementItem (itemName,setLoading,restaurantID,uid,setCar
         //Add
         await setDoc(doc(db,orderPath),{
             restaurantID: restaurantID,
+            userID:uid,
             date:Date.now().toString(),
             total:price,
             items:[item]
@@ -84,5 +86,23 @@ export async function DecreaseItem (itemName,setLoading,restaurantID,uid,setCart
     await setDoc(doc(db,orderPath),{items:items},{merge:true});
     setCart(items);
     setLoading(false);
+}
 
+export async function getCartByUID(uid,setCart, setRestaurant){
+    //Get the first cart
+    const collectionPath = 'orders';
+    const orders = await getDocs(collection(db,collectionPath),where("userID","==",uid));
+    const firstDoc = orders.docs[0];
+    if(firstDoc === undefined) return;
+
+    //Get Restaurant DATA
+    const restaurantID = firstDoc.data()["restaurantID"];
+    const cart = firstDoc.data()["items"];
+    const restaurantPath = `restaurants/${restaurantID}/`;
+    console.log(restaurantPath);
+    const restaurantDoc = await getDoc(doc(db,restaurantPath));
+    console.log(restaurantDoc);
+    setCart(cart);
+    let restaurantData = {...restaurantDoc.data(),restaurantID:restaurantID};
+    setRestaurant([restaurantData]);
 }
