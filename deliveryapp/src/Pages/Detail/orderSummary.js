@@ -38,15 +38,13 @@ export function OrderSummary(props) {
                 <h6 className="font-weight-bold text-right mb-2">Subtotal : <span
                     className="text-danger">€{props.cart.reduce((a,b)=>a+(b.price*b.quantity),0)}</span></h6>
                 <p className="seven-color mb-1 text-right">Extra charges may apply</p>
-                {/*<p className="text-black mb-0 text-right">You have saved $955 on the*/}
-                {/*    bill</p>*/}
+
             </div>
-            <Link to="/thanks" className="btn btn-success btn-block btn-lg">Checkout
+            <Link to={
+               "/checkout"} className="btn btn-success btn-block btn-lg">Checkout
                 <Icofont icon="long-arrow-right"/></Link>
             <div className="pt-2"></div>
-            {/*<div className="alert alert-success" role="alert">*/}
-            {/*    You have saved <strong>$1,884</strong> on the bill*/}
-            {/*</div>*/}
+
         </div>
     </Col>;
 }
