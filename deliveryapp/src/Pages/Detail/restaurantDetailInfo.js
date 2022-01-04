@@ -8,6 +8,8 @@ import Table from 'react-bootstrap/Table'
 import Card from 'react-bootstrap/Card'
 
 export default function RestaurantDetailInfo(props) {
+
+
     return <div id="restaurant-info"
                 className="bg-white rounded shadow-sm p-4 mb-4">
 
@@ -62,38 +64,38 @@ export default function RestaurantDetailInfo(props) {
                 <tbody>
                 <tr>
                     <td>Monday</td>
-                    <td></td>
+                    <td>{props.restaurant.openingHoursNoon[0]}</td>
                     <td>{props.restaurant.openingHours[0]}</td>
                 </tr>
                 <tr>
                     <td>Tuesday</td>
-                    <td></td>
+                    <td>{props.restaurant.openingHoursNoon[1]}</td>
                     <td>{props.restaurant.openingHours[1]}</td>
                 </tr>
                 <tr>
                     <td>Wednesday</td>
-                    <td></td>
+                    <td>{props.restaurant.openingHoursNoon[2]}</td>
                     <td>{props.restaurant.openingHours[2]}</td>
 
                 </tr>
                 <tr>
                     <td>Thursday</td>
-                    <td></td>
+                    <td>{props.restaurant.openingHoursNoon[3]}</td>
                     <td>{props.restaurant.openingHours[3]}</td>
                 </tr>
                 <tr>
                     <td>Friday</td>
-                    <td></td>
+                    <td>{props.restaurant.openingHoursNoon[4]}</td>
                     <td>{props.restaurant.openingHours[4]}</td>
                 </tr>
                 <tr>
                     <td>Saturday</td>
-                    <td></td>
+                    <td>{props.restaurant.openingHoursNoon[5]}</td>
                     <td>{props.restaurant.openingHours[5]}</td>
                 </tr>
                 <tr>
                     <td>Sunday</td>
-                    <td></td>
+                    <td>{props.restaurant.openingHoursNoon[6]}</td>
                     <td>{props.restaurant.openingHours[6]}</td>
                 </tr>
                 </tbody>
