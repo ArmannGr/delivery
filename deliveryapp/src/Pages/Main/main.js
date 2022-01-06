@@ -28,7 +28,7 @@ class Main extends Component {
                             </Col>
                             <Col md={3} xs={6}>
                                 <ProductBox
-                                    image='img/2.jpg'
+                                    image='img/pro3.jpg'
                                     imageClass='img-fluid rounded'
                                     imageAlt='product'
                                     linkUrl='#'
