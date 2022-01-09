@@ -22,9 +22,11 @@
     "react-icofont": "^1.0.19",
     "react-loading-overlay": "^1.0.1",
     "react-owl-carousel3": "^2.2.5",
+    "react-photo-collage": "^1.0.9",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "react-spinners": "^0.11.0",
+    "styled-components": "^5.3.3",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
