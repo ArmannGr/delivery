@@ -14,7 +14,8 @@ export default function Checkout() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        getCartByUID(currentUser.uid, setCart, setRestaurant);
+        getCartByUID(currentUser.uid, setCart,setRestaurant);
+
     }, []);
 
 
@@ -22,7 +23,6 @@ export default function Checkout() {
         <LoadingOverlay
             active={loading}
             spinner={<ClockLoader color={"#fff"}/>}
-            // text='Loading...'
         >
             <section className="offer-dedicated-body mt-4 mb-4 pt-2 pb-2 ">
                 <Row className="justify-content-md-center">
@@ -31,6 +31,8 @@ export default function Checkout() {
                                                setCart={setCart} uid={currentUser.uid}/>
                     </Col>
                 </Row>
+
+
             </section>
         </LoadingOverlay>
 

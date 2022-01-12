@@ -20,6 +20,7 @@ import RestaurantDetail from "./Pages/Detail/restaurantDetail";
 import TestPage from "./testing/test";
 import RestaurantListing from "./Pages/RestaurantListing/RestaurantListing";
 import {AuthProvider} from "./contexts/AuthContext";
+import TrackOrder from "./Pages/TrackOrder/TrackOrder";
 
 function App() {
     return (
@@ -61,6 +62,10 @@ function App() {
 
                     <Route path='/test' exact={true}>
                         <TestPage/>
+                    </Route>
+
+                    <Route path={'/trackorder'} exact={true  }>
+                        <TrackOrder/>
                     </Route>
 
                 </Switch>
