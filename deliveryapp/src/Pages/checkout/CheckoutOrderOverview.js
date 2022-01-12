@@ -1,13 +1,38 @@
 import {Button, Col, Form, Image, InputGroup, OverlayTrigger, Tooltip} from "react-bootstrap";
 import Icofont from "react-icofont";
 import CheckoutItem from "../../common/CheckoutItem";
-import {Link} from "react-router-dom";
-import React from "react";
+import React, {useState} from "react";
 import PrettifyAddress from "../../utils/AddressPrettifier";
 import {IncrementItem, DecreaseItem} from "../Detail/cartService";
+import {db, doc, setDoc} from "../../firebase";
+import {useHistory} from "react-router-dom";
 
 export function CheckoutOrderOverview(props) {
     const totalToPay = props.cart.reduce((a, b) => a + (b.price * b.quantity), 0);
+    const history = useHistory();
+
+
+    async function ProcessPayment() {
+        props.setLoading(true);
+        //Change order state to paid
+        const orderID = `${props.uid}${props.restaurant[0].restaurantID}`;
+        const orderDoc = await setDoc(doc(db, `orders/${orderID}`), {
+            payment: {
+                hasPaid: true,
+                paymentMethode: "TestingPaymentMethode",
+                date: Date.now()
+            }
+        }, {
+            merge: true
+        });
+
+        props.setLoading(false);
+        history.push("/trackorder", {
+                restaurantID:props.restaurant[0].restaurantID,
+                uid:props.uid
+        });
+    }
+
     return <>
         <div className="generator-bg rounded shadow-sm mb-4 p-4 osahan-cart-item">
             {props.restaurant && props.restaurant.map(restaurant => <div
@@ -38,33 +63,15 @@ export function CheckoutOrderOverview(props) {
             </div>
             <div className="mb-2 bg-white rounded p-2 clearfix">
                 <p className="mb-1">Item Total <span className="float-right text-dark">{`€${totalToPay}`}</span></p>
-                {/*<p className="mb-1">Restaurant Charges <span className="float-right text-dark">$62.8</span></p>*/}
-                {/*<p className="mb-1">Delivery Fee*/}
-                {/*    <OverlayTrigger*/}
-                {/*        key="top"*/}
-                {/*        placement="top"*/}
-                {/*        overlay={*/}
-                {/*            <Tooltip id="tooltip-top">*/}
-                {/*                Total discount breakup*/}
-                {/*            </Tooltip>*/}
-                {/*        }*/}
-                {/*    >*/}
-                {/*		      <span className="text-info ml-1">*/}
-                {/*			      <Icofont icon="info-circle"/>*/}
-                {/*               </span>*/}
-                {/*    </OverlayTrigger>*/}
-                {/*    <span className="float-right text-dark">$10</span>*/}
-
-                {/*</p>*/}
-                {/*<p className="mb-1 text-success">Total Discount*/}
-                {/*    <span className="float-right text-success">$1884</span>*/}
-                {/*</p>*/}
                 <hr/>
                 <h6 className="font-weight-bold mb-0">TO PAY <span className="float-right">{`€${totalToPay}`}</span>
                 </h6>
             </div>
-            <Link to="/thanks" className="btn btn-success btn-block btn-lg">PAY {`€${totalToPay}`}
-                <Icofont icon="long-arrow-right"/></Link>
+            <Button onClick={ProcessPayment} variant="success"
+                    className="btn btn-success btn-block btn-lg">
+                <>{`PAY€${totalToPay}`} <Icofont icon="long-arrow-right"/></>
+            </Button>
+
         </div>
     </>;
 }
