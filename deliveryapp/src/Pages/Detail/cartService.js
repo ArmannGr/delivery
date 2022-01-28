@@ -120,19 +120,35 @@ export async function getCartByUID(uid, setCart, setRestaurant) {
     //Get the first cart
     const collectionPath = 'orders';
     const orders = await getDocs(collection(db, collectionPath), where("userID", "==", uid));
-    const firstDoc = orders.docs[0];
-    if (firstDoc === undefined) return;
+    const orderDocs = orders.docs;
+    var restaurants = [];
+    var carts = [];
+    for (const order of orderDocs){
+        // Cart Data
+        const restaurantID = order.data()["restaurantID"];
+        const cart = order.data()["items"];
+        carts.push(cart);
+        // Restaurant Data
+        const restaurantPath = `restaurants/${restaurantID}/`;
+        const restaurantDoc = await getDoc(doc(db, restaurantPath));
+        let restaurantData = {...restaurantDoc.data(), restaurantID: restaurantID};
+        restaurants.push(restaurantData);
+    }
+    console.log(carts);
+    console.log(restaurants);
 
-    //Get Restaurant DATA
-    const restaurantID = firstDoc.data()["restaurantID"];
-    const cart = firstDoc.data()["items"];
-    const restaurantPath = `restaurants/${restaurantID}/`;
-    console.log(restaurantPath);
-    const restaurantDoc = await getDoc(doc(db, restaurantPath));
-    console.log(restaurantDoc);
-    setCart(cart);
-    let restaurantData = {...restaurantDoc.data(), restaurantID: restaurantID};
-    setRestaurant([restaurantData]);
+    setCart(carts);
+    setRestaurant(restaurants);
+    // //Get Restaurant DATA
+    // const restaurantID = firstDoc.data()["restaurantID"];
+    // const cart = firstDoc.data()["items"];
+    // const restaurantPath = `restaurants/${restaurantID}/`;
+    // console.log(restaurantPath);
+    // const restaurantDoc = await getDoc(doc(db, restaurantPath));
+    // console.log(restaurantDoc);
+    // setCart(cart);
+    // let restaurantData = {...restaurantDoc.data(), restaurantID: restaurantID};
+    // setRestaurant([restaurantData]);
 }
 
 export async function getTrackOrderData(uid, restaurantID,setTrackOrderData) {
