@@ -11,7 +11,6 @@ export function CheckoutOrderOverview(props) {
     const totalToPay = props.cart.reduce((a, b) => a + (b.price * b.quantity), 0);
     const history = useHistory();
 
-
     async function ProcessPayment() {
         props.setLoading(true);
         //Change order state to paid
@@ -28,8 +27,7 @@ export function CheckoutOrderOverview(props) {
 
         props.setLoading(false);
         history.push("/trackorder", {
-                restaurantID:props.restaurant[0].restaurantID,
-                uid:props.uid
+            orderID:orderID
         });
     }
 

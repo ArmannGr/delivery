@@ -1,14 +1,13 @@
 import {collection, db, doc, getDoc, getDocs, setDoc, where} from "../../firebase";
 
 
-export async function getRestaurant(restaurantID, setRestaurant) {
+export async function getRestaurant(restaurantID) {
     const orderPath = `restaurants/${restaurantID}/`;
     const orderDoc = await getDoc(doc(db, orderPath));
     if (orderDoc.exists()) {
-        console.log('Received');
-        setRestaurant([orderDoc.data()]);
+        return orderDoc.data();
     } else {
-        setRestaurant([]);
+        return {};
     }
 }
 
@@ -24,14 +23,14 @@ export async function getUserCart(restaurantID, uid, setCart) {
     }
 }
 
-export async function getOrder(restaurantID, uid, setCart) {
-    const orderPath = `orders/${uid}${restaurantID}/`;
+export async function getOrder(orderID) {
+    const orderPath = `orders/${orderID}`;
     console.log(orderPath);
     const orderDoc = await getDoc(doc(db, orderPath));
     if (orderDoc.exists()) {
-        setCart([orderDoc.data()]);
+        return orderDoc.data();
     } else {
-        setCart([]);
+        return {};
     }
 }
 
@@ -135,22 +134,31 @@ export async function getCartByUID(uid, setCart, setRestaurant) {
     setRestaurant([restaurantData]);
 }
 
-export async function getTrackOrderData(uid, restaurantID,setTrackOrderData) {
-    let cart = [];
-    let setCart = (_) => {
-        cart = _;
-    };
-    let restaurant = [];
-    let setRestaurant = (_) => {
-        restaurant = _;
-    };
-    await getOrder(restaurantID, uid, setCart);
-    await getRestaurant(restaurantID, setRestaurant);
+export async function getTrackOrderData(orderID,setTrackOrderData) {
+    const order = await getOrder(orderID);
+    const restaurant = await getRestaurant(order.restaurantID);
     const trackData = [{
-        cart: cart[0],
-        restaurant: restaurant[0]
+        order: order,
+        restaurant: restaurant
     }];
     setTrackOrderData(trackData);
-    console.log(trackData);
+}
+
+/// Return all the paid orders for user
+export async function getOrderHistory(uid,setOrderHistory){
+    const ordersDocs = (await getDocs(collection(db, '/orders'), where("userID", "==", uid), where("payment.hasPaid","==",true))).docs;
+    let orderHistory = [];
+    for(const order of ordersDocs){
+        // get restaurant for this order
+        const restaurantDoc = (await getRestaurant(order.data()['restaurantID']));
+        orderHistory.push({
+            items:order.data()['items'],
+            restaurant:restaurantDoc,
+            orderID:order.id
+        });
+    }
+    console.log(orderHistory);
+
+    setOrderHistory(orderHistory);
 
 }

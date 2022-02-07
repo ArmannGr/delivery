@@ -21,6 +21,7 @@ import TestPage from "./testing/test";
 import RestaurantListing from "./Pages/RestaurantListing/RestaurantListing";
 import {AuthProvider} from "./contexts/AuthContext";
 import TrackOrder from "./Pages/TrackOrder/TrackOrder";
+import OrderHistory from "./Pages/OrderHistory/OrderHistory";
 
 function App() {
     return (
@@ -32,7 +33,6 @@ function App() {
                 <Route render={probs =>(
                     (probs.location.pathname!=='/login' && probs.location.pathname!=='/register') ? <Header/>:''
                 )}/>
-
                 <Switch>
 
                     <Route path="/" exact={true}>
@@ -66,6 +66,10 @@ function App() {
 
                     <Route path={'/trackorder'} exact={true  }>
                         <TrackOrder/>
+                    </Route>
+
+                    <Route path={'/orderhistory'} exact={true}>
+                        <OrderHistory/>
                     </Route>
 
                 </Switch>
