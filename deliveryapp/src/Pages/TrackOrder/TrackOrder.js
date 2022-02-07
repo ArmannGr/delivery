@@ -16,21 +16,18 @@ export default function TrackOrder() {
     useEffect(() => {
         console.log(params.orderID);
         getTrackOrderData(params.orderID, setTrackOrderData);
-
     }, []);
 
 
     return (
         <div>
             {trackOrderData && trackOrderData.map(data => {
-
                 return <section
                     className="section bg-white osahan-track-order-page position-relative pt-4">
                     <Row className="justify-content-md-center">
                         <Col md={5}>
                             <div className="bg-white p-4 shadow-lg mb-2">
                                 <div className="mb-2"><small>Order #{data.order.date}<Link
-
                                     className="float-right font-weight-bold" to="#"><Icofont
                                     icon="headphone-alt"/> HELP</Link></small></div>
                                 <h6 className="mb-1 mt-1">
@@ -41,7 +38,6 @@ export default function TrackOrder() {
                                 <p className="text-gray mb-0"><Icofont
                                     icon="clock-time"/> {data.order.date} | {data.order.items.length} |
                                     €{data.order.items.reduce((a, b) => a + (b.price * b.quantity), 0)} </p>)
-
 
                             </div>
                             <div className="bg-white p-4 shadow-lg">
@@ -63,14 +59,12 @@ export default function TrackOrder() {
 	                                 </span>
                                             </h6>
                                             <p className="text-gray mb-0">{PrettifyAddress(data.order.deliveryAddress)}
-
                                             </p>
                                         </Col>
                                         <Col md={7}>
                                             <div className="mb-2"><small><Icofont
                                                 icon="list"/> {data.order.items.length} ITEMS</small></div>
                                             {data.order.items && data.order.items.map(item =>
-
                                                 <CartDropdownItem
                                                     icoIcon='ui-press'
                                                     iconClass='text-danger food-item'
@@ -84,7 +78,6 @@ export default function TrackOrder() {
                                             </p>
                                             <p className="mb-0 text-info"><small>Paid
                                                 via {data.order.payment.paymentMethode}</small>
-
                                             </p>
                                         </Col>
                                     </Row>
