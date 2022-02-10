@@ -14,21 +14,23 @@ export default function TrackOrder() {
     const params = location.state;
 
     useEffect(() => {
-        console.log("Getting data");
-        getTrackOrderData(params.uid, params.restaurantID, setTrackOrderData);
+        console.log(params.orderID);
+        getTrackOrderData(params.orderID, setTrackOrderData);
+
     }, []);
 
 
     return (
         <div>
             {trackOrderData && trackOrderData.map(data => {
-                console.log(data);
+
                 return <section
                     className="section bg-white osahan-track-order-page position-relative pt-4">
                     <Row className="justify-content-md-center">
                         <Col md={5}>
                             <div className="bg-white p-4 shadow-lg mb-2">
-                                <div className="mb-2"><small>Order #{data.cart.date}<Link
+                                <div className="mb-2"><small>Order #{data.order.date}<Link
+
                                     className="float-right font-weight-bold" to="#"><Icofont
                                     icon="headphone-alt"/> HELP</Link></small></div>
                                 <h6 className="mb-1 mt-1">
@@ -37,8 +39,9 @@ export default function TrackOrder() {
                                     </Link>)
                                 </h6>
                                 <p className="text-gray mb-0"><Icofont
-                                    icon="clock-time"/> {data.cart.date} | {data.cart.items.length} |
-                                    €{data.cart.items.reduce((a, b) => a + (b.price * b.quantity), 0)} </p>)
+                                    icon="clock-time"/> {data.order.date} | {data.order.items.length} |
+                                    €{data.order.items.reduce((a, b) => a + (b.price * b.quantity), 0)} </p>)
+
 
                             </div>
                             <div className="bg-white p-4 shadow-lg">
@@ -59,13 +62,15 @@ export default function TrackOrder() {
                                                 icon="map-pins"/> Other
 	                                 </span>
                                             </h6>
-                                            <p className="text-gray mb-0">{PrettifyAddress(data.cart.deliveryAddress)}
+                                            <p className="text-gray mb-0">{PrettifyAddress(data.order.deliveryAddress)}
+
                                             </p>
                                         </Col>
                                         <Col md={7}>
                                             <div className="mb-2"><small><Icofont
-                                                icon="list"/> {data.cart.items.length} ITEMS</small></div>
-                                            {data.cart.items && data.cart.items.map(item =>
+                                                icon="list"/> {data.order.items.length} ITEMS</small></div>
+                                            {data.order.items && data.order.items.map(item =>
+
                                                 <CartDropdownItem
                                                     icoIcon='ui-press'
                                                     iconClass='text-danger food-item'
@@ -75,10 +80,11 @@ export default function TrackOrder() {
 
                                             <hr/>
                                             <p className="mb-0 font-weight-bold text-black">TOTAL BILL <span
-                                                className="float-right text-secondary">€{data.cart.items.reduce((a, b) => a + (b.price * b.quantity), 0)}</span>
+                                                className="float-right text-secondary">€{data.order.items.reduce((a, b) => a + (b.price * b.quantity), 0)}</span>
                                             </p>
                                             <p className="mb-0 text-info"><small>Paid
-                                                via {data.cart.payment.paymentMethode}</small>
+                                                via {data.order.payment.paymentMethode}</small>
+
                                             </p>
                                         </Col>
                                     </Row>
