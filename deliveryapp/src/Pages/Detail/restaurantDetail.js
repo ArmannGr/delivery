@@ -103,7 +103,7 @@ export default function RestaurantDetail() {
                                 </div>
                             </Col>
 
-                            <OrderSummary cart={cart}
+                            <OrderSummary cart={cart} uid={currentUser.uid} restaurantID={restaurant.id}
                                           decrease={(itemName)=>DecreaseItem(itemName,setLoadingState,restaurant.id,currentUser.uid,setCart)}
                                           increase={(itemName)=>IncrementItem(itemName,setLoadingState,restaurant.id,currentUser.uid,setCart)}
                             />

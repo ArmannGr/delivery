@@ -1,6 +1,6 @@
 import * as firebase from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
-import { doc as Doc, setDoc as SetDoc, addDoc as AddDoc, collection as Collection,getFirestore as GetFirestore, getDocs as GetDocs, getDoc as GetDoc} from "firebase/firestore";
+import { doc as Doc, setDoc as SetDoc, addDoc as AddDoc, collection as Collection,getFirestore as GetFirestore, getDocs as GetDocs, getDoc as GetDoc, where as Where} from "firebase/firestore";
 import { getStorage as GetStorage} from "firebase/storage";
 
 const firebaseConfig = {
@@ -30,3 +30,4 @@ export const db = GetFirestore();
 export const getDocs = GetDocs;
 export const getStorage = GetStorage(app);
 export const getDoc = GetDoc;
+export const where = Where;

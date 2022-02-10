@@ -20,9 +20,7 @@ import RestaurantDetail from "./Pages/Detail/restaurantDetail";
 import TestPage from "./testing/test";
 import RestaurantListing from "./Pages/RestaurantListing/RestaurantListing";
 import {AuthProvider} from "./contexts/AuthContext";
-import LoadingOverlay from "react-loading-overlay";
-import ClockLoader from "react-spinners/BeatLoader"
-import {Row} from "react-bootstrap";
+import TrackOrder from "./Pages/TrackOrder/TrackOrder";
 
 function App() {
     return (
@@ -64,6 +62,10 @@ function App() {
 
                     <Route path='/test' exact={true}>
                         <TestPage/>
+                    </Route>
+
+                    <Route path={'/trackorder'} exact={true  }>
+                        <TrackOrder/>
                     </Route>
 
                 </Switch>
