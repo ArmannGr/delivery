@@ -23,6 +23,7 @@ import {AuthProvider} from "./contexts/AuthContext";
 import TrackOrder from "./Pages/TrackOrder/TrackOrder";
 import OrderHistory from "./Pages/OrderHistory/OrderHistory";
 
+
 function App() {
     return (
 
@@ -71,6 +72,7 @@ function App() {
                     <Route path={'/orderhistory'} exact={true}>
                         <OrderHistory/>
                     </Route>
+
 
                 </Switch>
 

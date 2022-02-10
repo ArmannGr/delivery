@@ -8,6 +8,7 @@ export async function getRestaurant(restaurantID) {
         return orderDoc.data();
     } else {
         return {};
+
     }
 }
 
@@ -31,6 +32,7 @@ export async function getOrder(orderID) {
         return orderDoc.data();
     } else {
         return {};
+
     }
 }
 
@@ -161,4 +163,6 @@ export async function getOrderHistory(uid,setOrderHistory){
 
     setOrderHistory(orderHistory);
 
+
+}
 }

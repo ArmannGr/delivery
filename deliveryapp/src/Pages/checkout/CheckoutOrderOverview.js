@@ -2,6 +2,7 @@ import {Button, Col, Form, Image, InputGroup, OverlayTrigger, Tooltip} from "rea
 import Icofont from "react-icofont";
 import CheckoutItem from "../../common/CheckoutItem";
 import React, {useState} from "react";
+
 import PrettifyAddress from "../../utils/AddressPrettifier";
 import {IncrementItem, DecreaseItem} from "../Detail/cartService";
 import {db, doc, setDoc} from "../../firebase";
@@ -15,6 +16,7 @@ export function CheckoutOrderOverview(props) {
         props.setLoading(true);
         //Change order state to paid
         const orderID = `${props.uid}${props.restaurant[0].restaurantID}`;
+
         const orderDoc = await setDoc(doc(db, `orders/${orderID}`), {
             payment: {
                 hasPaid: true,
@@ -28,6 +30,7 @@ export function CheckoutOrderOverview(props) {
         props.setLoading(false);
         history.push("/trackorder", {
             orderID:orderID
+
         });
     }
 
