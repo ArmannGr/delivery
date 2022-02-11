@@ -163,6 +163,4 @@ export async function getOrderHistory(uid,setOrderHistory){
 
     setOrderHistory(orderHistory);
 
-
-}
 }
