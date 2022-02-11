@@ -111,6 +111,7 @@ export async function DecreaseItem(itemName, setLoading, restaurantID, uid, setC
 
         currentItem.quantity--;
     }
+    
     //upload
     await setDoc(doc(db, orderPath), {items: items}, {merge: true});
     setCart(items);
