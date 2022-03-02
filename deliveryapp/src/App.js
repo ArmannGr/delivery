@@ -20,7 +20,7 @@ import RestaurantDetail from "./Pages/Detail/restaurantDetail";
 import TestPage from "./testing/test";
 import RestaurantListing from "./Pages/RestaurantListing/RestaurantListing";
 import {AuthProvider} from "./contexts/AuthContext";
-import TrackOrder from "./Pages/TrackOrder/TrackOrder";
+import TrackOrder, {TRACK_ORDER_PATH} from "./Pages/TrackOrder/TrackOrder";
 import OrderHistory from "./Pages/OrderHistory/OrderHistory";
 
 function App() {
@@ -64,7 +64,7 @@ function App() {
                         <TestPage/>
                     </Route>
 
-                    <Route path={'/trackorder'} exact={true  }>
+                    <Route path={TRACK_ORDER_PATH} exact={true  }>
                         <TrackOrder/>
                     </Route>
 

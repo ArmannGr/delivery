@@ -13,10 +13,11 @@ export async function getRestaurant(restaurantID) {
 }
 
 export async function getUserCart(restaurantID, uid, setCart) {
+
+
     const orderPath = `orders/${uid}${restaurantID}/`;
-    console.log(orderPath);
     const orderDoc = await getDoc(doc(db, orderPath));
-    if (orderDoc.exists()) {
+    if (orderDoc.exists() && orderDoc.data()['payment'] === undefined ){
         const items = orderDoc.data()["items"];
         setCart([...items]);
     } else {
@@ -120,8 +121,8 @@ export async function DecreaseItem(itemName, setLoading, restaurantID, uid, setC
 export async function getCartByUID(uid, setCart, setRestaurant) {
     //Get the first cart
     const collectionPath = 'orders';
-    const orders = await getDocs(collection(db, collectionPath), where("userID", "==", uid));
-    const orderDocs = orders.docs;
+    const q = query(collection(db, collectionPath), where("userID", "==", uid), where("payment.hasPaid", "!=", true));
+    const orderDocs = (await getDocs(q)).docs;
     var restaurants = [];
     var carts = [];
     for (const order of orderDocs){
@@ -135,8 +136,6 @@ export async function getCartByUID(uid, setCart, setRestaurant) {
         let restaurantData = {...restaurantDoc.data(), restaurantID: restaurantID};
         restaurants.push(restaurantData);
     }
-    console.log(carts);
-    console.log(restaurants);
 
     setCart(carts);
     setRestaurant(restaurants);

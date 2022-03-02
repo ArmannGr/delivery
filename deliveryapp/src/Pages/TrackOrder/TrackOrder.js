@@ -7,6 +7,8 @@ import CartDropdownItem from '../../common/CartDropdownItem';
 import {getTrackOrderData} from "../Detail/cartService";
 import PrettifyAddress from "../../utils/AddressPrettifier";
 
+export const TRACK_ORDER_PATH = '/trackorder';
+
 export default function TrackOrder() {
 
     const location = useLocation();
@@ -14,8 +16,9 @@ export default function TrackOrder() {
     const params = location.state;
 
     useEffect(() => {
-        console.log(params.orderID);
-        getTrackOrderData(params.orderID, setTrackOrderData);
+        getTrackOrderData(params.orderID, setTrackOrderData).then(value => {
+            console.log(trackOrderData);
+        });
     }, []);
 
 
