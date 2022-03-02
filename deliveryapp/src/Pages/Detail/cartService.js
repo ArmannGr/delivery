@@ -1,4 +1,5 @@
 import {collection, db, doc, getDoc, getDocs, setDoc, where} from "../../firebase";
+import {query} from "firebase/firestore";
 
 
 export async function getRestaurant(restaurantID) {
@@ -109,7 +110,7 @@ export async function DecreaseItem(itemName, setLoading, restaurantID, uid, setC
 
         currentItem.quantity--;
     }
-    
+
     //upload
     await setDoc(doc(db, orderPath), {items: items}, {merge: true});
     setCart(items);
@@ -139,19 +140,9 @@ export async function getCartByUID(uid, setCart, setRestaurant) {
 
     setCart(carts);
     setRestaurant(restaurants);
-    // //Get Restaurant DATA
-    // const restaurantID = firstDoc.data()["restaurantID"];
-    // const cart = firstDoc.data()["items"];
-    // const restaurantPath = `restaurants/${restaurantID}/`;
-    // console.log(restaurantPath);
-    // const restaurantDoc = await getDoc(doc(db, restaurantPath));
-    // console.log(restaurantDoc);
-    // setCart(cart);
-    // let restaurantData = {...restaurantDoc.data(), restaurantID: restaurantID};
-    // setRestaurant([restaurantData]);
 }
 
-export async function getTrackOrderData(orderID,setTrackOrderData) {
+export async function getTrackOrderData(orderID, setTrackOrderData) {
     const order = await getOrder(orderID);
     const restaurant = await getRestaurant(order.restaurantID);
     const trackData = [{
@@ -162,19 +153,19 @@ export async function getTrackOrderData(orderID,setTrackOrderData) {
 }
 
 /// Return all the paid orders for user
-export async function getOrderHistory(uid,setOrderHistory){
-    const ordersDocs = (await getDocs(collection(db, '/orders'), where("userID", "==", uid), where("payment.hasPaid","==",true))).docs;
+export async function getOrderHistory(uid, setOrderHistory) {
+    const q = query(collection(db, '/orders'), where("userID", "==", uid), where("payment.hasPaid", "==", true));
+    const ordersDocs = (await getDocs(q)).docs;
     let orderHistory = [];
-    for(const order of ordersDocs){
+    for (const order of ordersDocs) {
         // get restaurant for this order
         const restaurantDoc = (await getRestaurant(order.data()['restaurantID']));
         orderHistory.push({
-            items:order.data()['items'],
-            restaurant:restaurantDoc,
-            orderID:order.id
+            items: order.data()['items'],
+            restaurant: restaurantDoc,
+            orderID: order.id
         });
     }
-    console.log(orderHistory);
 
     setOrderHistory(orderHistory);
 

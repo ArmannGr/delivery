@@ -29,7 +29,7 @@ export function CheckoutOrderOverview(props) {
 
         props.setLoading(false);
         history.push("/trackorder", {
-            orderID:orderID
+            orderID: orderID
 
         });
     }
