@@ -17,7 +17,7 @@ export async function getUserCart(restaurantID, uid, setCart) {
 
     const orderPath = `orders/${uid}${restaurantID}/`;
     const orderDoc = await getDoc(doc(db, orderPath));
-    if (orderDoc.exists() && orderDoc.data()['payment'] === undefined ){
+    if (orderDoc.exists() && orderDoc.data()['payment'] === undefined) {
         const items = orderDoc.data()["items"];
         setCart([...items]);
     } else {
@@ -92,6 +92,9 @@ export async function IncrementItem(itemName, setLoading, restaurantID, uid, set
                 postalCode: 'default PostalCode',
                 state: 'default State',
                 street: 'default Street'
+            },
+            payment: {
+                hasPaid: false
             }
         });
         setCart([item]);
@@ -121,11 +124,11 @@ export async function DecreaseItem(itemName, setLoading, restaurantID, uid, setC
 export async function getCartByUID(uid, setCart, setRestaurant) {
     //Get the first cart
     const collectionPath = 'orders';
-    const q = query(collection(db, collectionPath), where("userID", "==", uid), where("payment.hasPaid", "!=", true));
+    const q = query(collection(db, collectionPath), where("userID", "==", uid), where("payment.hasPaid", "==", false));
     const orderDocs = (await getDocs(q)).docs;
     var restaurants = [];
     var carts = [];
-    for (const order of orderDocs){
+    for (const order of orderDocs) {
         // Cart Data
         const restaurantID = order.data()["restaurantID"];
         const cart = order.data()["items"];
