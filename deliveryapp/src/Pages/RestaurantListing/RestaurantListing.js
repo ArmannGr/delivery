@@ -30,6 +30,8 @@ export default function RestaurantListing(){
 
     }
 
+
+
     return (
         <>
             <PageTitle
@@ -44,7 +46,6 @@ export default function RestaurantListing(){
                         <Col md={9}>
                             <CategoriesCarousel/>
                             <Row>
-
                                 {
                                     restaurants && restaurants.map(restaurant => {
                                             return <RestaurantListingItem restaurantData={restaurant}/>;
