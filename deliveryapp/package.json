@@ -2,6 +2,7 @@
   "name": "deliveryapp",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@firebase/storage": "^0.8.1",
     "@fortawesome/fontawesome-free": "^5.15.4",

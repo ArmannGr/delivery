@@ -20,6 +20,7 @@ Version: 1.0
 -- Mobile Media
 */
 /* Body */
+
 body {
     background: #f3f7f8;
     font-size: 13px;
@@ -230,8 +231,13 @@ img {
     padding-right: 106px;
 }
 
+.center{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
 .homepage-search-form .form-group {
-    position: relative;
 }
 
 .homepage-search-form .locate-me {
