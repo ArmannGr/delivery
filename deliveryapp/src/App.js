@@ -55,7 +55,7 @@ function App() {
                         <RestaurantDetail/>
                     </Route>
 
-                    <Route path="/listing" exact={true}>
+                    <Route path="/listing" exact={true} >
                         <RestaurantListing/>
                     </Route>
 
