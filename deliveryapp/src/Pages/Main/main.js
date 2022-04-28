@@ -8,29 +8,43 @@ import SectionHeading from '../../common/SectionHeading';
 import FontAwesome from '../../common/FontAwesome';
 import {Link} from "react-router-dom";
 import {RestaurantListingItem} from "../RestaurantListing/RestaurantListingItem";
+import firebase from "firebase/compat";
+import {config} from "@fortawesome/fontawesome-svg-core";
+import * as admin from "../../firebase";
+import {useAuth} from "../../contexts/AuthContext";
 
 
     export default function Main(){
         const [restaurants, setRestaurants] = useState([]);
-        return (
-            <>
-                <TopSearch />
+        let user = useAuth().currentUser;
+        console.log(user);
+            if (user){
+                return (
+                    <>
+                        <TopSearch />
+                    </>
+                );
+            }else{
+                return (
+                    <>
+                        <TopSearch />
 
-                <section className="section pt-5 pb-5 bg-white becomemember-section border-bottom">
-                    <Container>
-                        <SectionHeading
-                            heading='Haben Sie schon einen Account?'
-                            subHeading='mit einem Account können Sie bequem und einfach Bestellungen aufgeben'
-                        />
-                        <Row>
-                            <Col sm={12} className="text-center">
-                                <Link to="/register">Erstellen Sie einen Account<FontAwesome icon='chevron-circle-right' /> </Link>
-                            </Col>
-                        </Row>
-                    </Container>
-                </section>
-            </>
-        );
+                        <section className="section pt-5 pb-5 bg-white becomemember-section border-bottom">
+                            <Container>
+                                <SectionHeading
+                                    heading='Haben Sie schon einen Account?'
+                                    subHeading='mit einem Account können Sie bequem und einfach Bestellungen aufgeben'
+                                />
+                                <Row>
+                                    <Col sm={12} className="text-center">
+                                        <Link to="/register">Erstellen Sie einen Account<FontAwesome icon='chevron-circle-right' /> </Link>
+                                    </Col>
+                                </Row>
+                            </Container>
+                        </section>
+                    </>
+                );
+            }
 
 }
 

@@ -10,7 +10,7 @@ import CategoriesCarousel from '../../../common/CategoriesCarousel';
 
 class TopSearch extends React.Component {
     state = {
-        searchLocation: ""
+        searchLocation: "alle"
     };
 
     render() {
