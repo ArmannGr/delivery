@@ -1,36 +1,38 @@
-import {collection, db, doc, getDoc, getDocs, setDoc, where} from "../../firebase";
-import {query} from "firebase/firestore";
-
+import {collection, db, doc, getDoc, getDocs, setDoc, where, limit, query, addDoc} from "../../firebase";
 
 export async function getRestaurant(restaurantID) {
     const orderPath = `restaurants/${restaurantID}/`;
     const orderDoc = await getDoc(doc(db, orderPath));
     if (orderDoc.exists()) {
-        return orderDoc.data();
+        return {
+            restaurantID: restaurantID, ...orderDoc.data()
+        };
     } else {
         return {};
     }
 }
 
+// order -> ID -> restaurantID + userID
+// order -> ID
+
 export async function getUserCart(restaurantID, uid, setCart) {
+    console.log("Getting cart!");
+    const q = query(collection(db, '/orders'), where("userID", "==", uid), where("restaurantID", "==", restaurantID), where("deliveryStatus.status", "==", "Cart"), limit(1));
+    let querySnapshot = await getDocs(q);
 
-
-    const orderPath = `orders/${uid}${restaurantID}/`;
-    const orderDoc = await getDoc(doc(db, orderPath));
-    if (orderDoc.exists() && orderDoc.data()['payment'] === undefined) {
-        const items = orderDoc.data()["items"];
+    if (!querySnapshot.empty) {
+        const items = querySnapshot.docs[0].data()['items'];
         setCart([...items]);
     } else {
         setCart([]);
     }
 }
 
-export async function getOrder(orderID) {
-    const orderPath = `orders/${orderID}`;
-    console.log(orderPath);
-    const orderDoc = await getDoc(doc(db, orderPath));
-    if (orderDoc.exists()) {
-        return orderDoc.data();
+export async function getOrder(restaurantID, uid) {
+    const q = query(collection(db, '/orders'), where("userID", "==", uid), where("restaurantID", "==", restaurantID), where("deliveryStatus.status", "==", "Cart"), limit(1));
+    let querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+        return querySnapshot.docs[0].data();
     } else {
         return {};
     }
@@ -41,8 +43,11 @@ export async function IncrementItem(itemName, setLoading, restaurantID, uid, set
     console.log(uid);
     console.log(restaurantID);
     //Add or Increase item
-    const orderPath = `orders/${uid}${restaurantID}/`;
-    let orderDoc = await getDoc(doc(db, orderPath));
+
+
+    const q = query(collection(db, '/orders'), where("userID", "==", uid), where("restaurantID", "==", restaurantID), where("deliveryStatus.status", "==", "Cart"), limit(1));
+    let querySnapshot = await getDocs(q);
+
     const menu = await getDocs(collection(db, `restaurants/${restaurantID}/menu`));
     const menuItem = menu.docs.find(doc => doc.data()["name"] === itemName);
     if (menuItem === undefined) {
@@ -52,10 +57,10 @@ export async function IncrementItem(itemName, setLoading, restaurantID, uid, set
     console.log(menu);
     const price = menuItem.data()["price"];
 
-    if (orderDoc.exists()) {
-        console.log("Exists");
+    if (!querySnapshot.empty) {
+        var order = querySnapshot.docs[0];
         //Increment
-        let items = orderDoc.data()["items"];
+        let items = order.data()["items"];
         let currentItem = items.find(orderItem => orderItem.name === itemName);
         if (currentItem === undefined) {
             items.push({
@@ -67,7 +72,7 @@ export async function IncrementItem(itemName, setLoading, restaurantID, uid, set
             currentItem.quantity++;
         }
 
-        await setDoc(doc(db, orderPath), {items: items}, {merge: true});
+        await setDoc(doc(db, `/orders/${order.id}`), {items: items}, {merge: true});
         setCart(items);
     } else {
         console.log("Doesn't exists");
@@ -80,7 +85,7 @@ export async function IncrementItem(itemName, setLoading, restaurantID, uid, set
         };
         console.table(item);
         //Add
-        await setDoc(doc(db, orderPath), {
+        await addDoc(collection(db, 'orders'), {
             restaurantID: restaurantID,
             userID: uid,
             date: Date.now().toString(),
@@ -95,6 +100,9 @@ export async function IncrementItem(itemName, setLoading, restaurantID, uid, set
             },
             payment: {
                 hasPaid: false
+            },
+            deliveryStatus: {
+                status: "Cart"
             }
         });
         setCart([item]);
@@ -104,8 +112,11 @@ export async function IncrementItem(itemName, setLoading, restaurantID, uid, set
 
 export async function DecreaseItem(itemName, setLoading, restaurantID, uid, setCart) {
     setLoading(true);
-    const orderPath = `orders/${uid}${restaurantID}/`;
-    let orderDoc = await getDoc(doc(db, orderPath));
+
+    const q = query(collection(db, '/orders'), where("userID", "==", uid), where("restaurantID", "==", restaurantID), where("deliveryStatus.status", "==", "Cart"), limit(1));
+    let querySnapshot = await getDocs(q);
+
+    let orderDoc = querySnapshot.docs[0];
     let items = orderDoc.data()["items"];
     let currentItem = items.find(orderItem => orderItem.name === itemName);
     if (currentItem.quantity === 1) {
@@ -116,41 +127,20 @@ export async function DecreaseItem(itemName, setLoading, restaurantID, uid, setC
     }
 
     //upload
-    await setDoc(doc(db, orderPath), {items: items}, {merge: true});
+    await setDoc(doc(db, `orders/${orderDoc.id}`), {items: items}, {merge: true});
     setCart(items);
     setLoading(false);
 }
 
-export async function getCartByUID(uid, setCart, setRestaurant) {
-    //Get the first cart
-    const collectionPath = 'orders';
-    const q = query(collection(db, collectionPath), where("userID", "==", uid), where("payment.hasPaid", "==", false));
-    const orderDocs = (await getDocs(q)).docs;
-    var restaurants = [];
-    var carts = [];
-    for (const order of orderDocs) {
-        // Cart Data
-        const restaurantID = order.data()["restaurantID"];
-        const cart = order.data()["items"];
-        carts.push(cart);
-        // Restaurant Data
-        const restaurantPath = `restaurants/${restaurantID}/`;
-        const restaurantDoc = await getDoc(doc(db, restaurantPath));
-        let restaurantData = {...restaurantDoc.data(), restaurantID: restaurantID};
-        restaurants.push(restaurantData);
-    }
-
-    setCart(carts);
-    setRestaurant(restaurants);
-}
-
-export async function getTrackOrderData(orderID, setTrackOrderData) {
-    const order = await getOrder(orderID);
-    const restaurant = await getRestaurant(order.restaurantID);
-    const trackData = [{
+export async function getTrackOrderData(restaurantID, uid, setTrackOrderData) {
+    const order = await getOrder(restaurantID, uid);
+    const restaurant = await getRestaurant(restaurantID);
+    const trackData = {
         order: order,
         restaurant: restaurant
-    }];
+    };
+
+
     setTrackOrderData(trackData);
 }
 
@@ -171,4 +161,35 @@ export async function getOrderHistory(uid, setOrderHistory) {
 
     setOrderHistory(orderHistory);
 
+}
+
+export async function placeAnonymousOrder(order, setLoading) {
+    //TODO Customer should receive an email - Server
+
+    //TODO Restaurant should receive an email - Server
+
+    //Order should be set to paid
+    //Delivery address needs to be updated
+    var orderPath = `/orders/${order.orderID}`;
+    var data = {
+        payment: {
+            hasPaid: true,
+            date: Date.now().toString(),
+            paymentMethod: 'cash'
+        },
+        contact: {
+            email: order.email,
+            number: order.number,
+            name: order.name
+        },
+        deliveryAddress: {
+            city: order.city,
+            houseNumber: order.houseNumber,
+            postalCode: order.postalCode,
+            street: order.street
+        }
+    };
+    await setDoc(doc(db, orderPath), data, {merge: true});
+
+    setLoading(false);
 }

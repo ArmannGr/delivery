@@ -23,11 +23,10 @@ export function CheckoutOrderOverview(props) {
 
     useEffect(() => {
             console.log(props);
-            setCart(props.cart);
+            setCart(props.cart.items);
         },
         []);
-
-
+    
 
     async function ProcessPayment() {
         props.setLoading(true);

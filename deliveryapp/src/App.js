@@ -15,7 +15,7 @@ import './App.css';
 import 'font-awesome/css/font-awesome.min.css';
 import Login from './Pages/Login/Login'
 import Register from "./Pages/Register/Register";
-import Checkout from "./Pages/checkout/Checkout";
+import Checkout, {CHECKOUT_ROUTE} from "./Pages/checkout/Checkout";
 import RestaurantDetail from "./Pages/Detail/restaurantDetail";
 import TestPage from "./testing/test";
 import RestaurantListing from "./Pages/RestaurantListing/RestaurantListing";
@@ -39,7 +39,7 @@ function App() {
                         <Main/>
                     </Route>
 
-                    <Route path="/checkout" exact={true}>
+                    <Route path={CHECKOUT_ROUTE} exact={true}>
                         <Checkout/>
                     </Route>
 
@@ -75,7 +75,7 @@ function App() {
                 </Switch>
 
                 <Route render={probs =>(
-                    (probs.location.pathname!=='/login' && probs.location.pathname!=='/register') ? <Footer/>:''
+                    (probs.location.pathname!=='/login' && probs.location.pathname!=='/register' && probs.location.pathname!== CHECKOUT_ROUTE) ? <Footer/>:''
                 )}/>
 
             </Router>
