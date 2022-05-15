@@ -1,5 +1,5 @@
-import React, {useContext, useEffect,useState} from 'react';
-import {auth, createUser,signIn} from '../firebase';
+import React, {useContext, useEffect, useState} from 'react';
+import {addDoc, auth, createUser, db, doc, setDoc, signIn} from '../firebase';
 
 const AuthContext = React.createContext();
 
@@ -7,30 +7,29 @@ export function useAuth() {
     return useContext(AuthContext);
 }
 
-export function AuthProvider({children}){
+export function AuthProvider({children}) {
     const [currentUser, SetCurrentUser] = useState();
 
     const [loading, SetLoading] = useState(true);
 
-
-
-    function signUp(email, password){
-        return createUser(auth, email, password);
+    async function signUp(formData) {
+        const user = await createUser(auth, formData.email, formData.password);
+        delete formData.password;
+        await setDoc(doc(db, `Users/${user.user.uid}`), formData);
     }
 
-    function login(email, password){
-        return signIn(auth,email,password);
+    function login(email, password) {
+        return signIn(auth, email, password);
     }
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             SetCurrentUser(user);
             SetLoading(false);
         });
 
         return unsubscribe;
-    },[])
-
+    }, [])
 
 
     const value = {
