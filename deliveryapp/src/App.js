@@ -22,6 +22,7 @@ import RestaurantListing from "./Pages/RestaurantListing/RestaurantListing";
 import {AuthProvider} from "./contexts/AuthContext";
 import TrackOrder, {TRACK_ORDER_PATH} from "./Pages/TrackOrder/TrackOrder";
 import OrderHistory from "./Pages/OrderHistory/OrderHistory";
+import Settings from "./Pages/settings/settings";
 
 function App() {
     return (
@@ -70,6 +71,10 @@ function App() {
 
                     <Route path={'/orderhistory'} exact={true}>
                         <OrderHistory/>
+                    </Route>
+
+                    <Route path={'/settings'} exact={true}>
+                        <Settings/>
                     </Route>
 
                 </Switch>
