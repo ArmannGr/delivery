@@ -5,7 +5,6 @@ import {useAuth} from "../../contexts/AuthContext";
 import LoadingOverlay from "react-loading-overlay";
 import ClockLoader from "react-spinners/BeatLoader";
 
-
 function Register() {
     const {signUp} = useAuth()
     const [error, setError] = useState("")

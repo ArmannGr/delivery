@@ -1,10 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import {Button, Col, Container, Row, Spinner} from 'react-bootstrap';
 import PageTitle from '../../common/PageTitle';
-import CategoriesCarousel from '../../common/CategoriesCarousel';
 import {RestaurantListingItem} from "./RestaurantListingItem";
-import {RestaurantListingSortByButton} from "./RestaurantListingSortByButton";
-import {RestaurantListingLeftMenu} from "./RestaurantListingLeftMenu";
 import {collection, getDocs,query,where} from "firebase/firestore"
 import {restaurantConverter} from "./RestaurantModel";
 import {useLocation} from "react-router-dom";
@@ -14,8 +11,8 @@ export default function RestaurantListing(){
     const [restaurants, setRestaurants] = useState([]);
     const location = useLocation();
     const searchLocation = location.state.searchLocation;
-    const capitalizedCity = searchLocation.charAt(0).toUpperCase() + searchLocation.slice(1).toLowerCase();
-
+    let capitalizedCity = searchLocation.charAt(0).toUpperCase() + searchLocation.slice(1).toLowerCase();
+    let offerText;
     //get restaurants on start
     useEffect(() => {
             getRestaurantsForAddress();
@@ -30,21 +27,22 @@ export default function RestaurantListing(){
 
     }
 
-
+    if(capitalizedCity === 'Alle'){
+        offerText = 'Hier sehen Sie unsere derzeitigen Anbieter'
+    } else {
+        offerText = `Angebote in der nähe von ${capitalizedCity}`
+    }
 
     return (
         <>
             <PageTitle
-                title={`Offers Near ${capitalizedCity}`}
-                subTitle="Best deals at your favourite restaurants"/>
+                title={offerText}
+                subTitle="Die Besten Deals aus Ihrer Umgebung"/>
 
             <section className="section pt-5 pb-5 products-listing">
                 <Container>
-                    <RestaurantListingSortByButton/>
                     <Row>
-                        <RestaurantListingLeftMenu/>
                         <Col md={9}>
-                            <CategoriesCarousel/>
                             <Row>
                                 {
                                     restaurants && restaurants.map(restaurant => {
