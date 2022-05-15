@@ -1,10 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import {Button, Col, Container, Row, Spinner} from 'react-bootstrap';
 import PageTitle from '../../common/PageTitle';
-import CategoriesCarousel from '../../common/CategoriesCarousel';
 import {RestaurantListingItem} from "./RestaurantListingItem";
-import {RestaurantListingSortByButton} from "./RestaurantListingSortByButton";
-import {RestaurantListingLeftMenu} from "./RestaurantListingLeftMenu";
 import {collection, getDocs,query,where} from "firebase/firestore"
 import {restaurantConverter} from "./RestaurantModel";
 import {useLocation} from "react-router-dom";
