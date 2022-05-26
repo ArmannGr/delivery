@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import Card from "react-bootstrap/Card";
 import Button from "@material-ui/core/Button";
-import {Col, Container, Row, Nav, Spinner} from "react-bootstrap";
+import {Col, Container, Row, Nav} from "react-bootstrap";
 import Form from 'react-bootstrap/Form'
 import {signOut, updateProfile, updateEmail, updatePassword} from "firebase/auth";
 import {auth, db} from "../../firebase";
@@ -10,8 +10,7 @@ import { doc, setDoc, collection, query, where, getDocs} from "firebase/firestor
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSearchLocation, faLock} from '@fortawesome/free-solid-svg-icons';
 import {addressConverter} from "./AddressModel";
-import {RestaurantListingItem} from "../RestaurantListing/RestaurantListingItem";
-import {AddressComponent, addressComponent} from "./AddressComponent";
+import {AddressComponent} from "./AddressComponent";
 
 export default function Settings(){
 
@@ -27,8 +26,6 @@ export default function Settings(){
     const postalCodeRef = useRef();
     const areaRef = useRef();
     let passwordCompare = true;
-    const getAddressRef = useRef() ;
-    let getAddressRef2: string[];
     const [address, getAddress] = useState([]);
 
     useEffect(() => {
@@ -94,15 +91,18 @@ export default function Settings(){
     }
 
     const handleSetAddress = async () => {
+        const date = Date.now();
         console.log("setAddress exists")
-        await setDoc(doc(db, "Address", nameAddressRef.current.value + addressRef.current.value + postalCodeRef.current.value + auth.currentUser.email), {
+        await setDoc(doc(db, "Address", auth.currentUser.uid + date), {
             name: nameAddressRef.current.value,
             address: addressRef.current.value,
             streetNumber: addressNumberRef.current.value,
             postalCode: postalCodeRef.current.value,
             area: areaRef.current.value,
-            email: auth.currentUser.email
+            email: auth.currentUser.email,
+            date: date
         });
+        window.location.reload();
     }
 
 
