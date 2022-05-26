@@ -118,10 +118,7 @@ export default function Settings(){
                                 <Card>
                                     <Card.Body>
                                         <Card.Title><FontAwesomeIcon icon={ faSearchLocation } /> Adresse</Card.Title>
-                                        <Container>
-                                            <Row>
-                                                <Col md={9}>
-                                                    <Row>
+                                        <div>
                                                         {
                                                             address && address.map(address => {
                                                                     return <AddressComponent addressData={address}/>
@@ -129,10 +126,7 @@ export default function Settings(){
                                                             )
                                                         }
 
-                                                    </Row>
-                                                </Col>
-                                            </Row>
-                                        </Container>
+                                        </div>
                                         <Form>
                                             <div className="form-label-group">
                                                 <Form.Control type="name" id="inputNameAddress" placeholder="Name" ref={nameAddressRef} required/>
