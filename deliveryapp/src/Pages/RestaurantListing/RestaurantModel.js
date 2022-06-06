@@ -1,5 +1,6 @@
 class RestaurantModel{
-    constructor(name,deliveryHours,openingHours,profileImage,tags,canDeliver, stars, address, menu, id, backgroundImage) {
+    constructor(name,deliveryHours,openingHours,profileImage,tags,canDeliver, stars, address, menu, id, backgroundImage,
+                openingHoursNoon, image1, image2, image3, image4) {
         this.name = name;
         this.deliveryHours =deliveryHours ;
         this.openingHours = openingHours;
@@ -11,6 +12,11 @@ class RestaurantModel{
         this.menu = menu;
         this.id = id;
         this.backgroundImage= backgroundImage;
+        this.openingHoursNoon = openingHoursNoon;
+        this.image1 = image1;
+        this.image3 = image3;
+        this.image2 = image2;
+        this.image4 = image4;
     }
 }
 
@@ -27,7 +33,12 @@ export const restaurantConverter = {
             address:restaurant.address,
             menu:restaurant.menu,
             id:restaurant.id,
-            backgroundImage:restaurant.backgroundImage
+            backgroundImage:restaurant.backgroundImage,
+            openingHoursNoon: restaurant.openingHoursNoon,
+            image1: restaurant.image1,
+            image3: restaurant.image3,
+            image2: restaurant.image2,
+            image4: restaurant.image4,
 
         }
     },
@@ -44,7 +55,12 @@ export const restaurantConverter = {
             data.address,
             data.menu,
             snapshot.id,
-            data.backgroundImage
+            data.backgroundImage,
+            data.openingHoursNoon,
+            data.image1,
+            data.image3,
+            data.image2,
+            data.image4,
         )
     }
 }

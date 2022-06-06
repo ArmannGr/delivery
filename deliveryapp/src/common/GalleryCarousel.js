@@ -1,6 +1,8 @@
 import React from 'react';
 import OwlCarousel from 'react-owl-carousel3';
-import {Image,Button} from 'react-bootstrap';
+import { ReactPhotoCollage } from "react-photo-collage";
+import {Col, Image} from "react-bootstrap";
+
 
 class GalleryCarousel extends React.Component {
    constructor(props){
@@ -9,26 +11,45 @@ class GalleryCarousel extends React.Component {
       itemscount: 0,
       showing:0
     }; 
-    this.Carousel = React.createRef();            
+    this.Carousel
+        = React.createRef();
   }
 
+
+
 	render() {
+        const mystyle = {
+            color: "white",
+            backgroundColor: "DodgerBlue",
+            padding: "10px",
+            fontFamily: "Arial"
+        };
+        const img = {
+            width: "auto",
+            height: "100px"
+        };
+        const setting = {
+            width: '530px',
+            height: ['250px', '170px'],
+            layout: [1, 4],
+            photos: [
+                { source: this.props.restaurant.image1 },
+                { source: this.props.restaurant.backgroundImage },
+                { source: this.props.restaurant.image3 },
+                { source: this.props.restaurant.image4 },
+                { source: this.props.restaurant.image2},
+                { source: this.props.restaurant.profileImage },
+
+
+            ],
+            showNumOfRemainingPhotos: true
+        };
     	return (
-	      <>
-		      <OwlCarousel ref={this.Carousel}  nav loop {...options} className="owl-theme homepage-ad">
-		         <div className="item">
-		         	<Image fluid src={this.props.restaurant.profileImage} />
-		         </div>
-		         <div className="item">
-		         	<Image fluid src={this.props.restaurant.backgroundImage} />
-		         </div>
-		         <div className="item">
-		         	<Image fluid src="/img/gallery/3.png" />
-		         </div>
-		      </OwlCarousel>
-	          <div className="position-absolute restaurant-slider-pics bg-dark text-white">2 of 14 Photos</div>
-	          <div className="position-absolute restaurant-slider-view-all"><Button variant='light' type="button" className="bg-white">See all Photos</Button></div>
-	    	</>
+
+              <ReactPhotoCollage {...setting} />
+
+
+
 	    );
 	}
 }
@@ -53,10 +74,8 @@ const options={
       autoplay: true,
       autoplaySpeed: 1000,
       dots: false,
-      autoplayTimeout: 2000,
       nav: true,
       navText:["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
-      autoplayHoverPause: true,
 }
 
 export default GalleryCarousel;

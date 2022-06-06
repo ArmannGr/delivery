@@ -5,11 +5,16 @@ import CategoriesCarousel from '../../common/CategoriesCarousel';
 import {RestaurantListingItem} from "./RestaurantListingItem";
 import {RestaurantListingSortByButton} from "./RestaurantListingSortByButton";
 import {RestaurantListingLeftMenu} from "./RestaurantListingLeftMenu";
-import {collection, db, getDocs} from "../../firebase";
+import {collection, getDocs,query,where} from "firebase/firestore"
 import {restaurantConverter} from "./RestaurantModel";
+import {useLocation} from "react-router-dom";
+import {db} from "../../firebase";
 
 export default function RestaurantListing(){
     const [restaurants, setRestaurants] = useState([]);
+    const location = useLocation();
+    const searchLocation = location.state.searchLocation;
+    const capitalizedCity = searchLocation.charAt(0).toUpperCase() + searchLocation.slice(1).toLowerCase();
 
     //get restaurants on start
     useEffect(() => {
@@ -18,16 +23,19 @@ export default function RestaurantListing(){
         []);
 
     async function getRestaurantsForAddress(){
-
-        const querysnapshot = await getDocs(collection(db,'restaurants').withConverter(restaurantConverter));
+        console.log(capitalizedCity);
+        const q = query(collection(db,'restaurants').withConverter(restaurantConverter),where("address.city","==",capitalizedCity));
+        const querysnapshot = await getDocs(q);
         setRestaurants(querysnapshot.docs.map(doc => doc.data()));
 
     }
 
+
+
     return (
         <>
             <PageTitle
-                title="Offers Near You"
+                title={`Offers Near ${capitalizedCity}`}
                 subTitle="Best deals at your favourite restaurants"/>
 
             <section className="section pt-5 pb-5 products-listing">
@@ -38,7 +46,6 @@ export default function RestaurantListing(){
                         <Col md={9}>
                             <CategoriesCarousel/>
                             <Row>
-
                                 {
                                     restaurants && restaurants.map(restaurant => {
                                             return <RestaurantListingItem restaurantData={restaurant}/>;

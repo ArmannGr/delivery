@@ -1,7 +1,18 @@
-import * as firebase from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
-import { doc as Doc, setDoc as SetDoc, addDoc as AddDoc, collection as Collection,getFirestore as GetFirestore, getDocs as GetDocs, getDoc as GetDoc} from "firebase/firestore";
-import { getStorage as GetStorage} from "firebase/storage";
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInAnonymously} from "firebase/auth";
+import {initializeApp} from "firebase/app";
+import {
+    doc as Doc,
+    setDoc as SetDoc,
+    addDoc as AddDoc,
+    collection as Collection,
+    getFirestore as GetFirestore,
+    getDocs as GetDocs,
+    getDoc as GetDoc,
+    where as Where,
+    limit as Limit,
+    query as Query
+} from "firebase/firestore";
+import {getStorage as GetStorage} from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,13 +24,13 @@ const firebaseConfig = {
     measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
-const app = firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
 //auth
 export const createUser = createUserWithEmailAndPassword;
 export const signIn = signInWithEmailAndPassword;
+export const signInAnonym = signInAnonymously;
 export const auth = getAuth();
-export default firebase;
 
 //firestore
 export const doc = Doc;
@@ -30,3 +41,6 @@ export const db = GetFirestore();
 export const getDocs = GetDocs;
 export const getStorage = GetStorage(app);
 export const getDoc = GetDoc;
+export const where = Where;
+export const limit = Limit;
+export const query = Query;

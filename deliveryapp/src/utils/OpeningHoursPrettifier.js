@@ -9,10 +9,12 @@ export default function PrettifyOpeningHours(openingHours){
         'Samstag',
         'Sonntag'
     ];
-    let prettifiedOpeningHours = '';
+    let prettifiedOpeningHours = '<p>';
     for (let i = 0; i < days.length; i++){
         let day = days[i];
-        prettifiedOpeningHours += `${day} ${openingHours[i]}`;
+        prettifiedOpeningHours += `${day} ${openingHours[i]} <br/>`;
+
     }
+    prettifiedOpeningHours+= '<p/>'
     return prettifiedOpeningHours;
 }
