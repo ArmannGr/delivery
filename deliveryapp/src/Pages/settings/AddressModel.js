@@ -1,11 +1,12 @@
 class AddressModel{
-    constructor(name, address, area, email, postalCode, streetNumber) {
+    constructor(name, address, area, email, postalCode, streetNumber, date) {
         this.name = name;
         this.address = address;
         this.area = area;
         this.email = email;
         this.postalCode = postalCode;
         this.streetNumber = streetNumber;
+        this.date = date;
     }
 }
 
@@ -17,7 +18,8 @@ export const addressConverter = {
             area:address.area,
             email:address.email,
             postalCode:address.postalCode,
-            streetNumber:address.streetNumber
+            streetNumber:address.streetNumber,
+            date: address.date
         }
     },
     fromFirestore(snapshot, options) {
@@ -28,7 +30,8 @@ export const addressConverter = {
             data.area,
             data.email,
             data.postalCode,
-            data.streetNumber
+            data.streetNumber,
+            data.date
         )
     }
 }
