@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {auth, createUser, signIn, signInAnonym} from '../firebase';
+import {addDoc, auth, createUser, db, doc, setDoc, signIn} from '../firebase';
 
 const AuthContext = React.createContext();
 
@@ -12,8 +12,10 @@ export function AuthProvider({children}) {
 
     const [loading, SetLoading] = useState(true);
 
-    function signUp(email, password) {
-        return createUser(auth, email, password);
+    async function signUp(formData) {
+        const user = await createUser(auth, formData.email, formData.password);
+        delete formData.password;
+        await setDoc(doc(db, `Users/${user.user.uid}`), formData);
     }
 
     function login(email, password) {
@@ -25,14 +27,6 @@ export function AuthProvider({children}) {
             SetCurrentUser(user);
             SetLoading(false);
         });
-
-        //sign in users anonymously
-        if (currentUser === null)
-            signInAnonym(auth).then(user => {
-                console.log(`Created anonymous user ${user.user.uid}`);
-                SetCurrentUser(user.user);
-                SetLoading(false);
-            });
 
         return unsubscribe;
     }, [])
